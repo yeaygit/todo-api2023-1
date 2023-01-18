@@ -51,7 +51,7 @@ class TodoServiceTest {
     }
 
     @Test
-    @DisplayName("2번쨰 할일의 제목을 수정수정으로 수정하고 할일 완료 처리를 해야한다.")
+    @DisplayName("2번째 할일의 제목을 수정수정으로 수정하고 할일 완료 처리를 해야한다.")
     void updateTest(){
         //given
         String newTitle ="수정수정";
@@ -77,7 +77,18 @@ class TodoServiceTest {
         responseDTO.getTodos().forEach(System.out::println);
     }
 
+    @Test
+    @DisplayName("세번째 할 일 삭제")
+    void deleteTest(){
+        //given
+        //when
+        TodoDetailResponseDTO targetTodo
+                = todoService.retrieve().getTodos().get(2);
+        TodoListResponseDTO responseDTO = todoService.delete(targetTodo.getId());
 
+        //then
+        assertEquals(2,responseDTO.getTodos().size());
+    }
 
 
 }
