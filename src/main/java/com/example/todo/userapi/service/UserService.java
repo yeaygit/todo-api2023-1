@@ -35,6 +35,8 @@ public class UserService {
 
 
         UserEntity savedUser = userRepository.save(userSignUpDTO.toEntity());
+
+        log.info("회원가입 성공 !! - user_id : {}",savedUser.getId());
         return new UserSignUpResponseDTO(savedUser); //dto로 변경해서 보내주기
     }
 }
