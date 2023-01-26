@@ -39,4 +39,13 @@ public class UserService {
         log.info("회원가입 성공 !! - user_id : {}",savedUser.getId());
         return new UserSignUpResponseDTO(savedUser); //dto로 변경해서 보내주기
     }
+
+
+    // 이메일 중복확인
+    public boolean isDuplicate(String email) {
+        if (email == null) {
+            throw new RuntimeException("이메일 값이 없습니다.");
+        }
+        return userRepository.existsByEmail(email);
+    }
 }
