@@ -1,5 +1,6 @@
 package com.example.todo.userapi.service;
 
+import com.example.todo.userapi.dto.LoginResponseDTO;
 import com.example.todo.userapi.dto.UserSignUpDTO;
 import com.example.todo.userapi.dto.UserSignUpResponseDTO;
 import com.example.todo.userapi.entity.UserEntity;
@@ -98,9 +99,10 @@ class UserServiceTest {
 
 
         //when
-        UserEntity loginUser=userService.getByCredentials(email,password);
+        LoginResponseDTO loginUser=userService.getByCredentials(email,password);
 
         //then
         assertEquals("백구",loginUser.getUserName());
+        System.out.println(loginUser);
     }
 }
