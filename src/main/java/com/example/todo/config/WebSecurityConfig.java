@@ -1,5 +1,7 @@
 package com.example.todo.config;
 
+import com.example.todo.security.JwtAuthFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,11 +9,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity // 설정파일로 등록한다는 용어
+@RequiredArgsConstructor
 public class WebSecurityConfig {
     // 패스워드 인코딩 클래스를 등록
     //<bean id=? class=?/>
+
+    private final JwtAuthFilter jwtAuthFilter;
+
     @Bean
     public BCryptPasswordEncoder encoder(){
         return new BCryptPasswordEncoder();
@@ -32,6 +39,9 @@ public class WebSecurityConfig {
                 .authorizeRequests().antMatchers("/","/api/auth/**").permitAll()
                 //그외 모든 경로는 인증을 거쳐야함.
                 .anyRequest().authenticated();
+        //토큰 인증 필터 등록
+        http.addFilterAfter(jwtAuthFilter, CorsFilter.class);//corsfilter import 주의
+
         return http.build();
     }
 

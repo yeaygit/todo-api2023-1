@@ -4,6 +4,7 @@ import com.example.todo.todoapi.entity.TodoEntity;
 import org.hibernate.sql.Select;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -15,4 +16,9 @@ public interface TodoRepository extends JpaRepository<TodoEntity,String> {
     //완료되지 않은 할일들만 조회 --> 이렇게 만들었으면 테스트 무조건 필요함
     @Query("select t from TodoEntity t where t.done=0")
     List<TodoEntity> findNotYetTodos();
+
+    //특정 회원의 할일 목록 조회
+//    @Query("select t from TodoEntity t where userId=:userId")
+    List<TodoEntity> findByUserId( String userId);
+
 }
